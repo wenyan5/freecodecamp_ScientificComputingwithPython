@@ -57,83 +57,56 @@ def create_spend_chart(categories):
     percentage.append(tmp)
 
   output = "Percentage spent by category\n"
-
-  
-  s = "Percentage spent by category"
   for i in range(100, -1, -10):
-    s += "\n" + str(i).rjust(3) + "|"
-    for j in percentage:
-      if j > i:
-        s += " o "
+    # if i == 0:
+    #   output += " "
+    # if i != 100:
+    #   output+= " "
+    # output += str(i) + "|"
+    output += str(i).rjust(3) + "| "
+
+    flag = 0
+    count = 0
+    for num in percentage:
+      count+=1
+      if num >= i:
+        output += "o  " 
+        # if flag != 0:
+        #   if count ==1:
+        #     output += " " 
+        #     output += " " * (flag -1)
+        #   else:
+        #     output += "  " * flag
+        #     output += "  o"
+        #     flag = 0
+        # else:
+        #   if count == 1:
+        #     output += " o"
+        #   else:
+        #     output += "  o"
       else:
-        s += "   "
-    # Spaces
-    s += " "
-  s += "\n    ----------"
+        output += "   " 
+        #flag += 1
 
-  cat_length = []
-  for category in categories:
-    cat_length.append(len(category.category))
-  max_length = max(cat_length)
+    output += '\n'
 
-  for i in range(max_length):
-    s += "\n    "
+  #print(len(percentage))
+  output += "    " + "-" + "-" * len(percentage)*3 
+
+  cat_len = []
+  maxlen = 0
+  for cat in categories:
+    cat_len.append(len(cat.category))
+    maxlen = max(maxlen, len(cat.category))
+
+  for i in range(0, maxlen):
+    output += '\n'
+    output += "     "
     for j in range(len(categories)):
-      if i < cat_length[j]:
-        s += " " + categories[j].category[i] + " "
+      if i < cat_len[j]:
+        output +=  categories[j].category[i] + "  "
       else:
-        s += "   "
-    # Spaces
-    s += " "
+        output += "   "
+    #if i < maxlen -1:
 
-  return s
-  # for i in range(100, -1, -10):
-  #   if i == 0:
-  #     output += " "
-  #   if i != 100:
-  #     output+= " "
-  #   output += str(i) + "|"
-
-  #   flag = 0
-  #   count = 0
-  #   for num in percentage:
-  #     count+=1
-  #     if num > i:
-  #       if flag != 0:
-  #         if count ==1:
-  #           output += " " 
-  #           output += " " * (flag -1)
-  #         else:
-  #           output += "  " * flag
-  #           output += "  o"
-  #           flag = 0
-  #       else:
-  #         if count == 1:
-  #           output += " o"
-  #         else:
-  #           output += "  o"
-  #     else:
-  #       flag += 1
-
-  #   output += '\n'
-
-  # #print(len(percentage))
-  # output += "    " + "-" + "-" * len(percentage)*3 
-
-  # cat_len = []
-  # maxlen = 0
-  # for cat in categories:
-  #   cat_len.append(len(cat.catagory))
-  #   maxlen = max(maxlen, len(cat.catagory))
-
-  # for i in range(0, maxlen):
-  #   output += '\n'
-  #   output += "     "
-  #   for j in range(len(categories)):
-  #     if i < cat_len[j]:
-  #       output +=  categories[j].catagory[i] + "  "
-  #     else:
-  #       output += "   "
-  #   #if i < maxlen -1:
-
-  return s
+  return output
